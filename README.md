@@ -1,2 +1,5 @@
-# CS549Project
-Traffic Sign Identification Project - Schuyler Wang, Alexander Pham, Thu Vu
+# CS549 Project Traffic Identification
+
+CS 549 - Machine Learning Final Project
+
+Schuyler Wang, Alexander Pham, Thu Vu
