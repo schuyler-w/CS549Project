@@ -66,12 +66,11 @@ def return_mosaic(image_list):
     :return: mosaic image
     """
 
-    return
+    raise NotImplementedError
 
 def main():
     # Check command line arguments
-    if len(sys.argv) != 2:
-        sys.exit("Usage: ...")
+    raise NotImplementedError
 
 if __name__ == "__main__":
     main()

@@ -11,7 +11,7 @@ EPOCHS = 10
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
 NUM_CATEGORIES = 43
-TEST_SIZE = 0.4
+TEST_SIZE = 0.7 # Initial test size of 40%
 
 def main():
     # Check command line arguments
@@ -26,11 +26,13 @@ def load_data(data_dir):
     Load image data from directory "data_dir"
 
     """
+    raise NotImplementedError
 
 def get_model():
     """
     Return a compiled neural network model
     """
+    raise NotImplementedError
 
 if __name__ == "__main__":
     main()
