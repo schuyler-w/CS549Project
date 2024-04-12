@@ -1,16 +1,38 @@
 import cv2
+import matplotlib.pyplot as plt
 import csv
 import numpy as np
 import os
 import sys
 import tensorflow as tf
+import random
 
 IMG_OUTPUT_WIDTH = 180
 IMG_OUTPUT_HEIGHT = 180
-MOSAIC_LENGTH = 15
+MOSAIC_LENGTH = 20
 TEXT_POSITION_H = 5
 TEXT_POSITION_V = -10
 
+def main():
+    # Check command line arguments
+    if len(sys.argv) not in [3]:
+        sys.exit("Usage: python predict.py model.keras test_directory") # python predict.py model.keras gtsrb/Test
+
+    signs = load_descriptions("signs.csv")
+    images = prepare_images(sys.argv[2])
+    image_arrays = [image['array'] for image in images]
+    model = tf.keras.models.load_model(sys.argv[1])
+    predictions = model.predict(np.array(image_arrays))
+    images = add_predictions_to_images(images, predictions)
+    images = add_text(images, signs)
+    mosaic = generate_mosaic(images)
+    mosaic = cv2.cvtColor(mosaic, cv2.COLOR_BGR2RGB)
+
+    # Display the mosaic using matplotlib
+    plt.imshow(mosaic)
+    plt.title('Mosaic')
+    plt.axis('off')  # Hide axes
+    plt.show()
 
 def load_descriptions(csv_file):
     """
@@ -30,12 +52,15 @@ def load_descriptions(csv_file):
 
 def prepare_images(dir):
     """
-    Load images from directory "dir" and return a list of images
+    Load images from test directory "dir" and return a list of 500 random images
     Resized to match training images.
     """
     images = []
 
-    for file in os.listdir(dir):
+    all_files = os.listdir(dir)
+    selected_files = random.sample(all_files, min(500, len(all_files)))
+
+    for file in selected_files:
         img = cv2.imread(os.path.join(dir, file))
 
         if img is not None:
@@ -48,7 +73,7 @@ def prepare_images(dir):
     return images
 
 
-def add_preds_to_images(image_list, preds):
+def add_predictions_to_images(image_list, predictions):
     """
     Adds prediction and confidence to each image dict
 
@@ -57,7 +82,7 @@ def add_preds_to_images(image_list, preds):
     :return: image_list with predictions and confidence added
     """
 
-    for index, array in enumerate(preds):
+    for index, array in enumerate(predictions):
         prediction = np.argmax(array)
 
         confidence = "{:.0%}".format(array[prediction])
@@ -108,27 +133,6 @@ def generate_mosaic(image_list):
         final.append(cv2.hconcat(row))
 
     return cv2.vconcat(final)
-
-
-
-
-def main():
-    # Check command line arguments
-    if len(sys.argv) not in [3]:
-        sys.exit("Usage: python predict.py model.keras image_directory")
-
-    signs = load_descriptions("signs.csv")
-    images = prepare_images(sys.argv[2])
-    image_arrays = [image['array'] for image in images]
-    model = tf.keras.models.load_model(sys.argv[1])
-    predictions = model.predict(np.array(image_arrays))
-    images = add_preds_to_images(images, predictions)
-    images = add_text(images, signs)
-    mosaic = generate_mosaic(images)
-
-    cv2.imshow('Mosaic', mosaic)
-    cv2.waitKey(0)
-
 
 if __name__ == "__main__":
     main()
