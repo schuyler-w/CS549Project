@@ -1,7 +1,9 @@
-import numpy as np
 import sys
+import numpy as np
 import tensorflow as tf
+
 from sklearn.model_selection import train_test_split
+
 from main import load_data
 
 EPOCHS = 10

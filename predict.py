@@ -1,39 +1,47 @@
-import cv2
-import matplotlib.pyplot as plt
-import csv
-import numpy as np
 import os
 import sys
-import tensorflow as tf
+import cv2
+import csv
 import random
+
+import numpy as np
+import tensorflow as tf
+import matplotlib.pyplot as plt
 
 IMG_OUTPUT_WIDTH = 180
 IMG_OUTPUT_HEIGHT = 180
-MOSAIC_LENGTH = 20
+MOSAIC_LENGTH = 5
 TEXT_POSITION_H = 5
 TEXT_POSITION_V = -10
+
 
 def main():
     # Check command line arguments
     if len(sys.argv) not in [3]:
-        sys.exit("Usage: python predict.py model.keras test_directory") # python predict.py model.keras gtsrb/Test
+        sys.exit("Usage: python predict.py model.keras test_directory")  # python predict.py model.keras gtsrb/Test
 
     signs = load_descriptions("signs.csv")
 
     images = prepare_images(sys.argv[2])
     image_arrays = [image['array'] for image in images]
+
     model = tf.keras.models.load_model(sys.argv[1])
     predictions = model.predict(np.array(image_arrays))
+
     images = add_predictions_to_images(images, predictions)
     images = add_text(images, signs)
+
     mosaic = generate_mosaic(images)
     mosaic = cv2.cvtColor(mosaic, cv2.COLOR_BGR2RGB)
 
-    # Display the mosaic using matplotlib
+    # Display the mosaic w/ matplotlib
     plt.imshow(mosaic)
     plt.title('Mosaic')
-    plt.axis('off')  # Hide axes
+    plt.axis('off')
+
+    plt.savefig('mosaic.png', bbox_inches='tight')
     plt.show()
+
 
 def load_descriptions(csv_file):
     """
@@ -51,18 +59,20 @@ def load_descriptions(csv_file):
     return descriptions
 
 
-def prepare_images(dir):
+def prepare_images(directory):
     """
     Load images from test directory "dir" and return a list of 500 random images
     Resized to match training images.
     """
     images = []
 
-    all_files = os.listdir(os.path.join(dir, "Test"))
-    selected_files = random.sample(all_files, min(500, len(all_files)))
+    directory = os.path.join(directory, 'Test')
+
+    all_files = os.listdir(directory)
+    selected_files = random.sample(all_files, min(25, len(all_files)))
 
     for file in selected_files:
-        img = cv2.imread(os.path.join(dir, file))
+        img = cv2.imread(os.path.join(directory, file))
 
         if img is not None:
             img = cv2.resize(img, (30, 30), interpolation=cv2.INTER_AREA)
@@ -79,7 +89,7 @@ def add_predictions_to_images(image_list, predictions):
     Adds prediction and confidence to each image dict
 
     :param image_list: image_list without predictions
-    :param preds: input predictions
+    :param predictions: input predictions
     :return: image_list with predictions and confidence added
     """
 
@@ -134,6 +144,7 @@ def generate_mosaic(image_list):
         final.append(cv2.hconcat(row))
 
     return cv2.vconcat(final)
+
 
 if __name__ == "__main__":
     main()
