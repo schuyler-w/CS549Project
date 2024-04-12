@@ -6,17 +6,19 @@ import sys
 import tensorflow as tf
 
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import classification_report
 
 EPOCHS = 10
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
 NUM_CATEGORIES = 43
-TEST_SIZE = 0.7 # Initial test size of 70%
+TEST_SIZE = 0.7
 
 def main():
     # Check command line arguments
     if len(sys.argv) not in [2, 3]:
-        sys.exit("Usage: python traffic.py data_directory [model.h5]")
+        sys.exit("Usage: python main.py data_directory model.keras")
 
     # get image arrays and labels for images
     images, labels = load_data(sys.argv[1])
@@ -59,6 +61,11 @@ def load_data(data_dir):
             images.append(img)
             labels.append(i)
 
+    if len(images) != len(labels):
+        sys.exit('Error when loading data, number of images did not match number of labels.')
+    else:
+        print(f'{len(images)}, {len(labels)} labelled images loaded successfully from dataset!')
+
     return images, labels
 
 def get_model():
@@ -67,7 +74,28 @@ def get_model():
     """
     model = tf.keras.models.Sequential([
 
+        # Add 2 sequential 64 filter, 3x3 Convolutional Layers Followed by 2x2 Pooling
+        tf.keras.layers.Conv2D(64, (3, 3), activation="relu", input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
+        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+        tf.keras.layers.Conv2D(64, (3, 3), activation="relu"),
+        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+
+        # Flatten layers
+        tf.keras.layers.Flatten(),
+
+        # Add A Dense Hidden layer with 512 units and 50% dropout
+        tf.keras.layers.Dense(512, activation="relu"),
+        tf.keras.layers.Dropout(0.5),
+
+        # Add Dense Output layer with 43 output units
+        tf.keras.layers.Dense(NUM_CATEGORIES, activation="softmax")
     ])
+
+    model.compile(optimizer="adam",
+                  loss="categorical_crossentropy",
+                  metrics=["accuracy"])
+
+    return model
 
 if __name__ == "__main__":
     main()
