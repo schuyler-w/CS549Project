@@ -47,8 +47,6 @@ def main():
         print(f"Model saved to {sys.argv[2]}.")
 
 
-
-
 def load_data(data_dir):
     """
     Load image data from directory "data_dir"
