@@ -1,19 +1,17 @@
 import cv2
-import csv
 import numpy as np
 import os
 import sys
 import tensorflow as tf
 
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 
 EPOCHS = 10
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
 NUM_CATEGORIES = 43
-TEST_SIZE = 0.7
+TEST_SIZE = 0.5
 
 def main():
     # Check command line arguments
@@ -25,6 +23,7 @@ def main():
 
     # Split data into training and testing sets
     labels = tf.keras.utils.to_categorical(labels)
+
     x_train, x_test, y_train, y_test = train_test_split(
         np.array(images), np.array(labels), test_size=TEST_SIZE
     )
@@ -35,9 +34,19 @@ def main():
 
     model.evaluate(x_test, y_test, verbose=2)
 
+    # Predict the labels
+    y_pred = model.predict(x_test)
+    y_pred_classes = np.argmax(y_pred, axis=1)
+    y_true_classes = np.argmax(y_test, axis=1)
+
+    report = classification_report(y_true_classes, y_pred_classes, target_names=[str(i) for i in range(NUM_CATEGORIES)])
+    print(report)
+
     if len(sys.argv) == 3:
         model.save(sys.argv[2])
         print(f"Model saved to {sys.argv[2]}.")
+
+
 
 
 def load_data(data_dir):
