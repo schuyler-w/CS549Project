@@ -19,6 +19,7 @@ def main():
         sys.exit("Usage: python predict.py model.keras test_directory") # python predict.py model.keras gtsrb/Test
 
     signs = load_descriptions("signs.csv")
+
     images = prepare_images(sys.argv[2])
     image_arrays = [image['array'] for image in images]
     model = tf.keras.models.load_model(sys.argv[1])
@@ -57,7 +58,7 @@ def prepare_images(dir):
     """
     images = []
 
-    all_files = os.listdir(dir)
+    all_files = os.listdir(os.path.join(dir, "Test"))
     selected_files = random.sample(all_files, min(500, len(all_files)))
 
     for file in selected_files:
