@@ -3,6 +3,7 @@ gtsrb
 __pycache__
 model.h5
 model.keras
+test.py
 *.ipynb
 *.png
 *.txt
