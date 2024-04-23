@@ -81,6 +81,6 @@ Usage: `python test_partial_data.py [percentage] [data_directory] [filename.type
 
 Example: `python test_partial_data.py 0.1 gtsrb model.keras classification_report.txt`
 
-Where `data_directory` is the directory where the dataset is stored, `filename.type` is the name of the file where the model will be saved, `classification_report.txt` is the name of the file where the performance metrics will be saved, and `percentage` is the percentage of data to use for training.
+Where `percentage` is the percentage of data to use for training, `data_directory` is the directory where the dataset is stored, `filename.type` is the name of the file where the model will be saved, and `metric_report.txt` is the name of the file where the performance metrics will be saved.
 
 Default `percentage` is 50% of the data.
