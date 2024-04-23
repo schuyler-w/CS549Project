@@ -39,6 +39,8 @@ Further saves `prediction_results.png` and `confusion_matrix.png` to the current
 
 `prediction_results.png` is a mosaic image of validation set images with predicted vs ground truth.
 
+![Prediction Results](readme/prediction_results.png)
+
 `confusion_matrix.png` is a heatmap confusion matrix of the model's performance.
 
 ### validation.py
@@ -59,7 +61,7 @@ This file contains the code to predict the traffic sign in an unlabeled testing 
 
 Usage: `python predict.py [model] [data_directory]`
 
-For example `python predict.py model.keras gtsrb`
+Example: `python predict.py model.keras gtsrb`
 
 model and data_directory are optional, by default the program assumes the model is saved as `model.keras` in the current directory and the dataset is stored in the `gtsrb` directory.
 
