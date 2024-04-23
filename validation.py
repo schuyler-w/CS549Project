@@ -16,7 +16,10 @@ TEST_SIZE = 0.3
 def main():
     # Check command-line arguments
     if len(sys.argv) not in [1, 2, 3]:
-        sys.exit("Usage: python validation.py [data_directory] [output_filename]")  # python validation.py gtsrb results.txt
+        sys.exit("Usage: python validation.py [data_directory] [benchmark.filetype]")
+        # python validation.py gtsrb results.txt
+        # if you want to save the benchmark results to a file data_directory MUST be specified
+        # otherwise prints results to standard out
 
     if len(sys.argv) == 1:
         directory = "gtsrb"
