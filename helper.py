@@ -6,11 +6,10 @@ import tensorflow as tf
 import numpy as np
 import sys
 
-EPOCHS = 10
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
 NUM_CATEGORIES = 43
-TEST_SIZE = 0.5
+TEST_SIZE = 0.3
 
 IMG_OUTPUT_WIDTH = 180
 IMG_OUTPUT_HEIGHT = 180
