@@ -7,7 +7,7 @@ Schuyler Wang, Alexander Pham, Thu Vu
 ___
 This project aims to create a convolutional neural network to identify which traffic sign appears in a picture or photograph. 
 
-The dataset used is the German Traffic Sign Recognition Benchmark (GTSRB) dataset, which contains 43 classes of traffic signs. The dataset is split into a training set and a test set, using `scikit-learn's` `train_test_split` function. The training set contains `70%` of the data, while the test set contains `30%` of the data.
+The dataset used is the German Traffic Sign Recognition Benchmark (GTSRB) dataset, which contains 43 classes of traffic signs. The dataset is split into a training set and a test set, using `scikit-learn's` `train_test_split` function. By default the training set contains `70%` of the data, while the test set contains `30%` of the data. This can be modified in the source code.
 
 The testing process also includes an unlabeled test set for manual confirmation. `predict.py` is used to predict the traffic sign in the unlabeled test set and returns a mosaic of the predicted labels. The program saves the mosaic image to `mosaic.png` in the current directory. 
 
