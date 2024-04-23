@@ -169,6 +169,41 @@ def load_data(data_dir):
     return images, labels
 
 
+def load_partial_data(data_dir, prop):
+    """
+    :param data_dir: directory containing image data
+    :param prop: float, proportion of data to load (between 0 and 1)
+        Load image data from directory "data_dir"
+        data_dir has one directory named after each category, numbered 0 through NUM_CATEGORIES - 1.
+        Inside each category directory are images of that category.
+        Only a `prop` proportion of the data will be randomly loaded.
+    :return (images, labels): tuple of lists of images and labels
+    """
+    if not (0 <= prop <= 1):
+        sys.exit('Error: prop must be a value between 0 and 1.')
+
+    images = []
+    labels = []
+
+    for i in range(NUM_CATEGORIES):
+        directory = os.path.join(data_dir, "Train", str(i))
+        files = os.listdir(directory)
+        num_files_to_select = int(len(files) * prop)
+        selected_files = random.sample(files, num_files_to_select)  # Randomly select a proportion of files
+
+        for file in selected_files:
+            img = cv2.imread(os.path.join(directory, file))
+            img = cv2.resize(img, (IMG_WIDTH, IMG_HEIGHT), interpolation=cv2.INTER_AREA)
+            images.append(img)
+            labels.append(i)
+
+    if len(images) != len(labels):
+        sys.exit('Error when loading data, number of images did not match number of labels.')
+    else:
+        print(f'{len(images)}, {len(labels)} labelled images loaded successfully from dataset!')
+
+    return images, labels
+
 def get_model():
     """
     :return: compiled neural network model
