@@ -10,16 +10,21 @@ EPOCHS = 10
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
 NUM_CATEGORIES = 43
-TEST_SIZE = 0.5
+TEST_SIZE = 0.3
 
 
 def main():
     # Check command-line arguments
-    if len(sys.argv) not in [2, 3]:
-        sys.exit("Usage: python validation.py data_directory [output_filename]")  # python validation.py gtsrb results.txt
+    if len(sys.argv) not in [1, 2, 3]:
+        sys.exit("Usage: python validation.py [data_directory] [output_filename]")  # python validation.py gtsrb results.txt
+
+    if len(sys.argv) == 1:
+        directory = "gtsrb"
+    else:
+        directory = sys.argv[1]
 
     # Get image arrays and labels for all image files
-    images, labels = load_data(sys.argv[1])
+    images, labels = load_data(directory)
 
     images, labels = np.array(images), np.array(labels)
     labels = tf.keras.utils.to_categorical(labels)
