@@ -39,7 +39,7 @@ Further saves `prediction_results.png` and `confusion_matrix.png` to the current
 
 `prediction_results.png` is a mosaic image of validation set images with predicted vs ground truth.
 
-![Prediction Results](readme/prediction_results.png)
+![Prediction Results](/Users/schuyler/Documents/SDSU/Spring 24/CS 549/CS549Project/readme/prediction_results.png)
 
 `confusion_matrix.png` is a heatmap confusion matrix of the model's performance.
 
