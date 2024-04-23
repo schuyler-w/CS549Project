@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
-from helper import load_descriptions, prepare_images, add_predictions_to_images, add_text, generate_mosaic
+from functions import load_descriptions, prepare_images, add_predictions_to_images, add_text, generate_mosaic
 
 
 def main():

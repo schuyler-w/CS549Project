@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
 
-from helper import load_descriptions, load_data, get_model
+from functions import load_descriptions, load_data, get_model
 
 EPOCHS = 10
 NUM_CATEGORIES = 43

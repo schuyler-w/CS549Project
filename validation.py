@@ -4,7 +4,7 @@ import tensorflow as tf
 
 from sklearn.model_selection import train_test_split
 
-from helper import load_data
+from functions import load_data
 
 EPOCHS = 10
 IMG_WIDTH = 30
