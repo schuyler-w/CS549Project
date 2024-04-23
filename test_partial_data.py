@@ -78,7 +78,7 @@ def main():
             f.write(report + "\n")
             f.write("Confusion Matrix:\n")
             f.write(str(cm) + "\n")
-        print(f"Report written to {sys.argv[3]}")
+        print(f"Report written to {sys.argv[4]}")
     else:
         with open("partial_data_classification_report.txt", 'w') as f:
             f.write("Partial Data Classification Report:\n")
