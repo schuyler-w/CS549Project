@@ -54,9 +54,7 @@ def main():
                                    activation="relu",
                                    input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
             tf.keras.layers.Flatten(),
-
             tf.keras.layers.Dense(64,
                                   activation="relu"),
             tf.keras.layers.Dense(NUM_CATEGORIES,
@@ -68,15 +66,11 @@ def main():
                                    activation="relu",
                                    input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
             tf.keras.layers.BatchNormalization(),
-
             tf.keras.layers.Conv2D(64, (3, 3),
                                    activation="relu"),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
             tf.keras.layers.Flatten(),
-
             tf.keras.layers.Dense(128,
                                   activation="relu"),
             tf.keras.layers.Dense(NUM_CATEGORIES,
@@ -88,15 +82,11 @@ def main():
                                    activation="relu",
                                    input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
             tf.keras.layers.BatchNormalization(),
-
             tf.keras.layers.Conv2D(128, (3, 3),
                                    activation="relu"),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
             tf.keras.layers.Flatten(),
-
             tf.keras.layers.Dense(256,
                                   activation="relu"),
             tf.keras.layers.Dropout(0.3),
@@ -109,15 +99,11 @@ def main():
                                    activation="relu",
                                    input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
             tf.keras.layers.BatchNormalization(),
-
             tf.keras.layers.Conv2D(256, (3, 3),
                                    activation="relu"),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
             tf.keras.layers.Flatten(),
-
             tf.keras.layers.Dense(512,
                                   activation="relu"),
             tf.keras.layers.Dropout(0.4),
@@ -131,15 +117,11 @@ def main():
                                    activation="relu",
                                    input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
             tf.keras.layers.BatchNormalization(),
-
             tf.keras.layers.Conv2D(128, (3, 3),
                                    activation="relu"),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
             tf.keras.layers.Flatten(),
-
             tf.keras.layers.Dense(256,
                                   activation="relu"),
             tf.keras.layers.Dropout(0.5),
@@ -153,15 +135,11 @@ def main():
                                    activation="relu",
                                    input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
             tf.keras.layers.BatchNormalization(),
-
             tf.keras.layers.Conv2D(128, (3, 3),
                                    activation="relu"),
             tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-
             tf.keras.layers.Flatten(),
-
             tf.keras.layers.Dense(256,
                                   activation="relu"),
             tf.keras.layers.Dropout(0.4),
@@ -171,33 +149,26 @@ def main():
     }
 
     if len(sys.argv) <= 2:
-        for name, model in models.items():
-            print(f"Evaluating {name}")
-
-            model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
-            model.fit(x_train, y_train, epochs=EPOCHS, verbose=0)
-            _, accuracy = model.evaluate(x_test, y_test, verbose=2)
-
-            print(f"Accuracy for {name}: {accuracy}")
-
+        evaluate_models(models, x_train, x_test, y_train, y_test)
     else:
-        original_stdout = sys.stdout
-
         with open(sys.argv[2], "w") as file:
+            evaluate_models(models, x_train, x_test, y_train, y_test, stream=file)
 
-            sys.stdout = file
 
-            for name, model in models.items():
-                print(f"Evaluating {name}")
+def evaluate_models(models, x_train, x_test, y_train, y_test, stream=sys.stdout):
+    original_stdout = sys.stdout  # Save the original stdout
+    sys.stdout = stream  # Redirect output to the specified stream
 
-                model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
-                model.fit(x_train, y_train, epochs=EPOCHS, verbose=0)
-                _, accuracy = model.evaluate(x_test, y_test, verbose=2)
+    for name, model in models.items():
+        print(f"Evaluating {name}")
 
-                print(f"Accuracy for {name}: {accuracy}")
+        model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+        model.fit(x_train, y_train, epochs=EPOCHS, verbose=0)
+        _, accuracy = model.evaluate(x_test, y_test, verbose=2)
 
-        sys.stdout = original_stdout
+        print(f"Accuracy for {name}: {accuracy}")
 
+    sys.stdout = original_stdout
 
 if __name__ == "__main__":
     main()
