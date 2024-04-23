@@ -18,14 +18,41 @@ ___
 
 1. Clone the repository
 2. Install the required libraries using `pip install -r requirements.txt`
-3. Download the dataset from the link above
+3. Download the dataset from the link above and place in program directory
 
 There are three main files in the repository:
 
-main.py: This file contains the main code for the project. It reads the dataset, preprocesses the images, creates the model, trains the model, and evaluates the model. Returns a mosaic image of validation set images with predicted vs ground truth. Usage: `python main.py data_directory [filename.type]`. filename.type is optional, by default model will be saved to `model.keras`.
+### main.py
+This file contains the main code for the project. It reads the dataset, preprocesses the images, creates the model, trains the model, and evaluates the model.
 
+Usage: `python main.py [data_directory] [filename.type] [metric_report.txt]`
 
+Data_directory, filename.type, and metric_report.txt are optional, by default: program assumes the dataset is stored in the `gtsrb` directory, model will be saved to `model.keras`, and performance metrics are saved to classification_report.txt.
 
-validation.py: This file performs cross-validation and benchmarking on a list of models to demonstrate how we selected the best model used in main.py. Usage: `python validation.py data_directory [output_filename]`. output_filename is optional, by default the output will be printed to standard output and not saved.
+Further saves `prediction_results.png` and `confusion_matrix.png` to the current directory.
 
-predict.py: This file contains the code to predict the traffic sign in an unlabeled testing set and returns a mosaic of predicted labels. Usage: `python predict.py model test_directory`. For example `python predict.py model.keras Test`. The program assumes that the test directory is inside the `gtsrb/` directory and automatically appends the file path. 
+`prediction_results.png` is a mosaic image of validation set images with predicted vs ground truth.
+
+`confusion_matrix.png` is a heatmap confusion matrix of the model's performance.
+
+### validation.py
+
+This file performs cross-validation and benchmarking on a list of models to demonstrate how we selected the best model used in main.py. 
+
+Usage: `python validation.py [data_directory] [benchmark.filetype]`
+
+Where data_directory is the directory where the dataset is stored and benchmark.filetype is the file where the benchmarking results will be saved.
+
+Data_directory and benchmark.filetype are optional, by default the program assumes the data_directory is `gtsrb` and the output will be printed to standard output and not saved to a file.
+
+### predict.py
+
+This file contains the code to predict the traffic sign in an unlabeled testing set and returns a mosaic of predicted labels. 
+
+Usage: `python predict.py model test_directory`
+
+For example `python predict.py model.keras gtsrb`
+
+The program assumes that the test directory is named `Test` and is inside the given directory and automatically appends the file path. ie: `gtsrb/Test`
+
+The program saves the mosaic image to `mosaic.png` in the current directory. Since the dataset is unlabeled, the program does not evaluate the model's performance and must be done so manually. This works for any dataset of images that are 32x32 pixels in size and fall inside one of the 43 categories.
