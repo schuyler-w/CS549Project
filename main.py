@@ -89,7 +89,8 @@ def main():
 
     descriptions = load_descriptions("signs.csv")
 
-    plt.figure(figsize=(25, 25))
+    plt.figure(figsize=(10, 10))
+    plt.suptitle("Validation: Prediction vs Ground Truth", fontsize=16, color='black')
     for i in range(25):
         plt.subplot(5, 5, i + 1)
         plt.grid(False)
@@ -98,10 +99,11 @@ def main():
         prediction = descriptions[sample_pred_classes[i]]
         actual = descriptions[sample_true_classes[i]]
         col = 'g' if sample_pred_classes[i] == sample_true_classes[i] else 'r'
-        plt.xlabel(f'Actual: {actual}\nPred: {prediction}', color=col)
+        plt.xlabel(f'True: {actual}\nPred: {prediction}', color=col, fontsize=6)
         plt.imshow(sample_images[i])
 
     # Save the figure
+    plt.subplots_adjust(left=0.05, right=0.95, top=0.9, bottom=0.1, wspace=0.4, hspace=0.4)
     plt.savefig('prediction_results.png')  # Saves the plot as a PNG file
 
     if len(sys.argv) == 3:
