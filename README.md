@@ -77,9 +77,9 @@ The program saves the mosaic image to `mosaic.png` in the current directory. Sin
 
 This file is used for additional model benchmarking and testing on a subset of the data. Works similarly to `main.py` in that it returns the same files and benchmarks, except an additional parameter to specify the percentage of data to use for training.
 
-Usage: `python test_partial_data.py [data_directory] [filename.type] [metric_report.txt] [percentage]`
+Usage: `python test_partial_data.py [percentage] [data_directory] [filename.type] [metric_report.txt]`
 
-Example: `python test_partial_data.py gtsrb model.keras classification_report.txt 0.1`
+Example: `python test_partial_data.py 0.1 gtsrb model.keras classification_report.txt`
 
 Where `data_directory` is the directory where the dataset is stored, `filename.type` is the name of the file where the model will be saved, `classification_report.txt` is the name of the file where the performance metrics will be saved, and `percentage` is the percentage of data to use for training.
 
