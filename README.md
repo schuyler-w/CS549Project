@@ -41,7 +41,7 @@ Further saves `prediction_results.png` and `confusion_matrix.png` to the current
 
 ![Prediction Results](/README_IMAGES/prediction_results.png)
 
-`confusion_matrix.png` is a heatmap confusion matrix of the model's performance.
+`confusion_matrix.png` is a heatmap confusion matrix of the model's performance. Generated using `sklearn`'s `ConfusionMatrixDisplay`
 
 ![Confusion Matrix](/README_IMAGES/confusion_matrix.png)
 
