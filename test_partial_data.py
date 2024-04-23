@@ -18,6 +18,9 @@ This script trains a model on a smaller subset of the data and evaluates its per
 It then generates a classification report and confusion matrix, and saves these to a file.
 It also saves a confusion matrix plot and a plot of a 5x5 mosaic of random images from the test set.
 Usage: python main.py [proportion] [data_directory] [model_name.type] [metric_report.txt]
+WARNING: Program may fail if the random sample of images does not contain all categories.
+This may happen if the proportion of images is too low or just bad luck.
+Just run again if it occurs.
 """
 
 def main():
