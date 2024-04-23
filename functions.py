@@ -3,6 +3,7 @@ import cv2
 import csv
 import random
 import tensorflow as tf
+import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
@@ -100,25 +101,37 @@ def add_text(image_list, sign):
     return image_list
 
 
-def generate_mosaic(image_list):
+def generate_mosaic(image_list, descriptions):
     """
     Return a mosaic image of the input images
 
+    :param descriptions: mapping of sign numeric label to description
     :param image_list: list of images
     :return: mosaic image
     """
 
-    final = []
+    n = int(len(image_list) ** 0.5)
+    n = max(n, 5)  # Ensuring at least a 5x5 grid
 
-    for i in range(0, len(image_list), MOSAIC_LENGTH):
-        row = [image['complete'] for image in image_list[i:i + MOSAIC_LENGTH]]
+    plt.figure(figsize=(n * 2, n * 2))  # Adjust the figure size as needed
+    for i, image in enumerate(image_list):
+        plt.subplot(n, n, i + 1)
+        plt.grid(False)
+        plt.xticks([])
+        plt.yticks([])
 
-        while len(row) < MOSAIC_LENGTH:
-            row.append(np.zeros((180, 180, 3), np.uint8))
+        prediction = image['prediction']
+        predicted_text = descriptions[prediction].upper()
 
-        final.append(cv2.hconcat(row))
+        plt.xlabel(f'{predicted_text}', color='green', fontsize=8)
 
-    return cv2.vconcat(final)
+        # Convert BGR to RGB
+        img_rgb = cv2.cvtColor(cv2.resize(image['array'], (180, 180)), cv2.COLOR_BGR2RGB)
+        plt.imshow(img_rgb)
+
+    plt.tight_layout()  # Adjust subplots to give more room for labels
+    plt.savefig('mosaic.png')  # Save the complete mosaic
+    plt.show()
 
 
 def load_data(data_dir):
