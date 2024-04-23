@@ -153,7 +153,7 @@ def main():
         ])
     }
 
-    if len(sys.argv) == 2:
+    if len(sys.argv) <= 2:
         for name, model in models.items():
             print(f"Evaluating {name}")
 
