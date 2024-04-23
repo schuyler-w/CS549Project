@@ -72,3 +72,15 @@ The program assumes that the test directory is named `Test` and is inside the gi
 The program saves the mosaic image to `mosaic.png` in the current directory. Since the dataset is unlabeled, the program does not evaluate the model's performance and must be done so manually. This works for any dataset of images that are 32x32 pixels in size and fall inside one of the 43 categories.
 
 ![Mosaic](/README_IMAGES/mosaic.png)
+
+### test_partial_data.py
+
+This file is used for additional model benchmarking and testing on a subset of the data. Works similarly to `main.py` in that it returns the same files and benchmarks, except an additional parameter to specify the percentage of data to use for training.
+
+Usage: `python test_partial_data.py [data_directory] [filename.type] [metric_report.txt] [percentage]`
+
+Example: `python test_partial_data.py gtsrb model.keras classification_report.txt 0.1`
+
+Where `data_directory` is the directory where the dataset is stored, `filename.type` is the name of the file where the model will be saved, `classification_report.txt` is the name of the file where the performance metrics will be saved, and `percentage` is the percentage of data to use for training.
+
+Default `percentage` is 50% of the data.
