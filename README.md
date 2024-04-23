@@ -27,6 +27,10 @@ This file contains the main code for the project. It reads the dataset, preproce
 
 Usage: `python main.py [data_directory] [filename.type] [metric_report.txt]`
 
+Example: `python main.py gtsrb model.keras classification_report.txt`
+
+Where data_directory is the directory where the dataset is stored, filename.type is the name of the file where the model will be saved, and classification_report.txt is the name of the file where the performance metrics will be saved.
+
 Data_directory, filename.type, and metric_report.txt are optional, by default: program assumes the dataset is stored in the `gtsrb` directory, model will be saved to `model.keras`, and performance metrics are saved to classification_report.txt.
 
 Further saves `prediction_results.png` and `confusion_matrix.png` to the current directory.
@@ -41,6 +45,8 @@ This file performs cross-validation and benchmarking on a list of models to demo
 
 Usage: `python validation.py [data_directory] [benchmark.filetype]`
 
+Example: `python validation.py gtsrb benchmark.txt`
+
 Where data_directory is the directory where the dataset is stored and benchmark.filetype is the file where the benchmarking results will be saved.
 
 Data_directory and benchmark.filetype are optional, by default the program assumes the data_directory is `gtsrb` and the output will be printed to standard output and not saved to a file.
@@ -49,9 +55,11 @@ Data_directory and benchmark.filetype are optional, by default the program assum
 
 This file contains the code to predict the traffic sign in an unlabeled testing set and returns a mosaic of predicted labels. 
 
-Usage: `python predict.py model test_directory`
+Usage: `python predict.py [model] [data_directory]`
 
 For example `python predict.py model.keras gtsrb`
+
+model and data_directory are optional, by default the program assumes the model is saved as `model.keras` in the current directory and the dataset is stored in the `gtsrb` directory.
 
 The program assumes that the test directory is named `Test` and is inside the given directory and automatically appends the file path. ie: `gtsrb/Test`
 
