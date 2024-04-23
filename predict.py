@@ -7,24 +7,29 @@ import matplotlib.pyplot as plt
 
 from helper import load_descriptions, prepare_images, add_predictions_to_images, add_text, generate_mosaic
 
-IMG_OUTPUT_WIDTH = 180
-IMG_OUTPUT_HEIGHT = 180
-MOSAIC_LENGTH = 5
-TEXT_POSITION_H = 5
-TEXT_POSITION_V = -10
-
 
 def main():
     # Check command line arguments
-    if len(sys.argv) not in [3]:
-        sys.exit("Usage: python predict.py model.keras test_directory")  # python predict.py model.keras gtsrb/Test
+    if len(sys.argv) not in [1, 2, 3]:
+        sys.exit("Usage: python predict.py [model.keras] [data_directory]")
+        # python predict.py model.keras gtsrb
+
+    if len(sys.argv) == 1:
+        model = "model.keras"
+        directory = "gtsrb"
+    elif len(sys.argv) == 2:
+        model = sys.argv[1]
+        directory = "gtsrb"
+    else:
+        model = sys.argv[1]
+        directory = sys.argv[2]
 
     signs = load_descriptions("signs.csv")
 
-    images = prepare_images(sys.argv[2])
+    images = prepare_images(directory)
     image_arrays = [image['array'] for image in images]
 
-    model = tf.keras.models.load_model(sys.argv[1])
+    model = tf.keras.models.load_model(model)
     predictions = model.predict(np.array(image_arrays))
 
     images = add_predictions_to_images(images, predictions)
