@@ -5,3 +5,5 @@ model.h5
 model.keras
 *.ipynb
 *.png
+*.txt
+*.docx
