@@ -10,8 +10,6 @@ from sklearn.metrics import classification_report, confusion_matrix, ConfusionMa
 from helper import load_descriptions, load_data, get_model
 
 EPOCHS = 2
-IMG_WIDTH = 30
-IMG_HEIGHT = 30
 NUM_CATEGORIES = 43
 TEST_SIZE = 0.3
 
