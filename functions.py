@@ -23,6 +23,9 @@ TEXT_POSITION_V = -10
 def load_descriptions(csv_file):
     """
     Load image descriptions from csv file into a dictionary
+
+    :param csv_file: csv file containing image descriptions
+    :return: dictionary of image descriptions
     """
 
     descriptions = {}
@@ -40,6 +43,9 @@ def prepare_images(directory):
     """
     Load images from test directory "dir" and return a list of 500 random images
     Resized to match training images.
+
+    :param directory: directory containing test images
+    :return: list of images
     """
     images = []
 
@@ -138,13 +144,11 @@ def generate_mosaic(image_list, descriptions):
 
 def load_data(data_dir):
     """
-    Load image data from directory "data_dir"
-
-    data_dir has one directory named after each category, numbered 0 through NUM_CATEGORIES - 1.
-    Inside each category directory are images of that category.
-
-    Returns a tuple (images, labels) where images is a list of images and labels is a list of labels.
-
+    :param data_dir: directory containing image data
+        Load image data from directory "data_dir"
+        data_dir has one directory named after each category, numbered 0 through NUM_CATEGORIES - 1.
+        Inside each category directory are images of that category.
+    :return (images, labels): tuple of lists of images and labels
     """
     images = []
     labels = []
@@ -167,7 +171,7 @@ def load_data(data_dir):
 
 def get_model():
     """
-    Return a compiled neural network model
+    :return: compiled neural network model
     """
     model = tf.keras.models.Sequential([
         tf.keras.layers.Conv2D(128, (3, 3),
