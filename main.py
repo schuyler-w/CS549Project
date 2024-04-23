@@ -19,6 +19,7 @@ def main():
     if len(sys.argv) not in [1, 2, 3, 4]:
         sys.exit("Usage: python main.py [data_directory] [model_name.type] [metric_report.txt]")
 
+    # if no args
     if len(sys.argv) == 1:
         directory = "gtsrb"
     else:
@@ -35,6 +36,7 @@ def main():
         test_size=TEST_SIZE
     )
 
+    # train model, function defined in functions.py
     model = get_model()
 
     model.fit(x_train, y_train,
@@ -57,7 +59,8 @@ def main():
 
     # set print options for numpy so that full confusion matrix is printed to report
     np.set_printoptions(threshold=np.inf, linewidth=200, edgeitems=10)
-    # Write the classification report and confusion matrix to report.txt
+
+    # Write the classification report and confusion matrix to classification_report.txt
     if len(sys.argv) == 4:
         with open(sys.argv[3], 'w') as f:
             f.write("Classification Report:\n")
@@ -74,7 +77,7 @@ def main():
         print("Report written to classification_report.txt")
 
     # Display confusion matrix using ConfusionMatrixDisplay
-    fig, ax = plt.subplots(figsize=(15, 15))  # Adjust the size to your needs
+    fig, ax = plt.subplots(figsize=(15, 15))
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=[str(i) for i in range(NUM_CATEGORIES)])
     disp.plot(include_values=True, cmap='viridis', ax=ax, xticks_rotation='vertical')
     plt.title('Confusion Matrix')
@@ -87,10 +90,12 @@ def main():
     sample_pred_classes = y_pred_classes[indices]
     sample_true_classes = y_true_classes[indices]
 
+    # map numeric labels -> descriptions of signs
     descriptions = load_descriptions("signs.csv")
 
+    # plot mosaic of ground truth vs preds
     plt.figure(figsize=(10, 10))
-    plt.suptitle("Validation: Prediction vs Ground Truth", fontsize=16, color='black')
+    plt.suptitle("Validation: Ground Truth vs Prediction", fontsize=16, color='black')
     for i in range(25):
         plt.subplot(5, 5, i + 1)
         plt.grid(False)
@@ -106,6 +111,7 @@ def main():
     plt.subplots_adjust(left=0.05, right=0.95, top=0.9, bottom=0.1, wspace=0.4, hspace=0.4)
     plt.savefig('prediction_results.png')  # Saves the plot as a PNG file
 
+    # save model to file specified or default
     if len(sys.argv) == 3:
         model.save(sys.argv[2])
         print(f"Model saved to {sys.argv[2]}.")
