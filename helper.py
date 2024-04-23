@@ -18,6 +18,7 @@ MOSAIC_LENGTH = 5
 TEXT_POSITION_H = 5
 TEXT_POSITION_V = -10
 
+
 def load_descriptions(csv_file):
     """
     Load image descriptions from csv file into a dictionary
@@ -120,6 +121,7 @@ def generate_mosaic(image_list):
 
     return cv2.vconcat(final)
 
+
 def load_data(data_dir):
     """
     Load image data from directory "data_dir"
@@ -154,22 +156,22 @@ def get_model():
     Return a compiled neural network model
     """
     model = tf.keras.models.Sequential([
-            tf.keras.layers.Conv2D(128, (3, 3),
-                                   activation="relu",
-                                   input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
-            tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-            tf.keras.layers.BatchNormalization(),
+        tf.keras.layers.Conv2D(128, (3, 3),
+                               activation="relu",
+                               input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
+        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+        tf.keras.layers.BatchNormalization(),
 
-            tf.keras.layers.Conv2D(128, (3, 3),
-                                   activation="relu"),
-            tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
-            tf.keras.layers.Flatten(),
-            tf.keras.layers.Dense(256,
-                                  activation="relu"),
-            tf.keras.layers.Dropout(0.4),
-            tf.keras.layers.Dense(NUM_CATEGORIES,
-                                  activation="softmax")
-        ])
+        tf.keras.layers.Conv2D(128, (3, 3),
+                               activation="relu"),
+        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+        tf.keras.layers.Flatten(),
+        tf.keras.layers.Dense(256,
+                              activation="relu"),
+        tf.keras.layers.Dropout(0.4),
+        tf.keras.layers.Dense(NUM_CATEGORIES,
+                              activation="softmax")
+    ])
 
     model.compile(optimizer="adam",
                   loss="categorical_crossentropy",
