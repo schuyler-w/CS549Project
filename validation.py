@@ -17,7 +17,7 @@ def main():
     # Check command-line arguments
     if len(sys.argv) not in [1, 2, 3]:
         sys.exit("Usage: python validation.py [data_directory] [benchmark.filetype]")
-        # python validation.py gtsrb results.txt
+        # python validation.py gtsrb benchmark.txt
         # if you want to save the benchmark results to a file data_directory MUST be specified
         # otherwise prints results to standard out
 
