@@ -13,7 +13,7 @@ The testing process also includes an unlabeled test set for manual confirmation.
 
 The images are 32x32 pixels in size and are in color. The dataset is available at https://www.kaggle.com/meowmeowmeowmeowmeow/gtsrb-german-traffic-sign.
 
-The results of the model are evaluated using the accuracy score, precision score, recall score, and F1 score as well as the overall confusion matrix. Furthermore, the program returns an image mosaic of a random sample of qualifying images with their predicted labels overlaid using the `cv2` library.
+The results of the model are evaluated using the accuracy score, precision score, recall score, and F1 score as well as the overall confusion matrix. Furthermore, the program returns an image mosaic of a random sample of qualifying images with their predicted labels overlaid with predictions and ground truth labels (if applicable) using `matplotlib`.
 
 ___
 ## How to use
@@ -22,7 +22,7 @@ ___
 2. Install the required libraries using `pip install -r requirements.txt`
 3. Download the dataset from the link above and place in program directory
 
-There are three main files in the repository, each file has extra command line arguments that can be used to customize the program, although they are each all designed with default values in mind so that they can be run without any arguments.
+There are three main files in the repository, each file has extra command line arguments that can be used to customize the program, although they are each designed with default values in mind so that they can be run without any arguments.
 
 ### main.py
 This file contains the main code for the project. It reads the dataset, preprocesses the images, creates the model, trains the model, and evaluates the model.
