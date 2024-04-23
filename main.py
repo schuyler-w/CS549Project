@@ -1,23 +1,17 @@
-import os
 import sys
-import cv2
-
 import tensorflow as tf
 import numpy as np
 
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report
 
 from helper import load_descriptions, load_data, get_model
 
-from sklearn.metrics import classification_report
-
-from predict import load_descriptions
-
 EPOCHS = 10
-IMG_WIDTH = 40
-IMG_HEIGHT = 40
+IMG_WIDTH = 30
+IMG_HEIGHT = 30
 NUM_CATEGORIES = 43
 TEST_SIZE = 0.5
 
@@ -82,6 +76,7 @@ def main():
     else:
         model.save("model.keras")
         print(f"Model saved to model.keras.")
+
 
 if __name__ == "__main__":
     main()
