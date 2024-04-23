@@ -2,10 +2,11 @@ import os
 import cv2
 import csv
 import random
+import sys
+
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
 
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
@@ -113,7 +114,8 @@ def generate_mosaic(image_list, descriptions):
     n = int(len(image_list) ** 0.5)
     n = max(n, 5)  # Ensuring at least a 5x5 grid
 
-    plt.figure(figsize=(n * 2, n * 2))  # Adjust the figure size as needed
+    plt.figure(figsize=(n * 2, n * 2))
+    plt.suptitle("Unlabeled Test Set Predictions", fontsize=16, color='black')
     for i, image in enumerate(image_list):
         plt.subplot(n, n, i + 1)
         plt.grid(False)
