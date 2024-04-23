@@ -19,7 +19,7 @@ def main():
         sys.exit("Usage: python validation.py [data_directory] [benchmark.filetype]")
         # python validation.py gtsrb benchmark.txt
         # if you want to save the benchmark results to a file data_directory MUST be specified
-        # otherwise prints results to standard out
+        # otherwise prints results to standard out and benchmark is NOT saved
 
     if len(sys.argv) == 1:
         directory = "gtsrb"
@@ -29,12 +29,14 @@ def main():
     # Get image arrays and labels for all image files
     images, labels = load_data(directory)
 
+    # Convert to numpy arrays
     images, labels = np.array(images), np.array(labels)
     labels = tf.keras.utils.to_categorical(labels)
 
+    # split data into training and testing sets
     x_train, x_test, y_train, y_test = train_test_split(images, labels, test_size=TEST_SIZE)
 
-    # Prepare models
+    # Prepare models dictionary
     models = {
         "Model 1": tf.keras.models.Sequential([
             tf.keras.layers.Flatten(input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
@@ -148,6 +150,7 @@ def main():
         ])
     }
 
+    # either output to standard out or to a file
     if len(sys.argv) <= 2:
         evaluate_models(models, x_train, x_test, y_train, y_test)
     else:
