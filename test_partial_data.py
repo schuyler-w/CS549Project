@@ -17,22 +17,22 @@ TEST_SIZE = 0.3
 This script trains a model on a smaller subset of the data and evaluates its performance.
 It then generates a classification report and confusion matrix, and saves these to a file.
 It also saves a confusion matrix plot and a plot of a 5x5 mosaic of random images from the test set.
-Usage: python main.py [data_directory] [model_name.type] [metric_report.txt] [proportion]
+Usage: python main.py [proportion] [data_directory] [model_name.type] [metric_report.txt]
 """
 
 def main():
     # Check command line arguments
     if len(sys.argv) not in [1, 2, 3, 4, 5]:
-        sys.exit("Usage: python main.py [data_directory] [model_name.type] [metric_report.txt] [proportion]")
+        sys.exit("Usage: python main.py [proportion] [data_directory] [model_name.type] [metric_report.txt]")
 
     # if no args
-    if len(sys.argv) == 1:
+    if len(sys.argv) <= 2:
         directory = "gtsrb"
     else:
-        directory = sys.argv[1]
+        directory = sys.argv[2]
 
-    if len(sys.argv) == 5:
-        prop = sys.argv[4]
+    if len(sys.argv) > 1:
+        prop = float(sys.argv[1])
     else:
         prop = 0.5
 
@@ -72,8 +72,8 @@ def main():
     np.set_printoptions(threshold=np.inf, linewidth=200, edgeitems=10)
 
     # Write the classification report and confusion matrix to classification_report.txt
-    if len(sys.argv) == 4:
-        with open(sys.argv[3], 'w') as f:
+    if len(sys.argv) == 5:
+        with open(sys.argv[4], 'w') as f:
             f.write("Partial Data Classification Report:\n")
             f.write(report + "\n")
             f.write("Confusion Matrix:\n")
@@ -123,9 +123,9 @@ def main():
     plt.savefig('partial_data_prediction_results.png')  # Saves the plot as a PNG file
 
     # save model to file specified or default
-    if len(sys.argv) == 3:
-        model.save(sys.argv[2])
-        print(f"Model saved to {sys.argv[2]}.")
+    if len(sys.argv) >= 4:
+        model.save(sys.argv[3])
+        print(f"Model saved to {sys.argv[3]}.")
     else:
         model.save("partial_model.keras")
         print(f"Model saved to partial_model.keras.")
