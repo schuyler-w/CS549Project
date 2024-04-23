@@ -39,11 +39,11 @@ Further saves `prediction_results.png` and `confusion_matrix.png` to the current
 
 `prediction_results.png` is a mosaic image of validation set images with predicted vs ground truth.
 
-![Prediction Results](/readme/prediction_results.png)
+![Prediction Results](/README_IMAGES/prediction_results.png)
 
 `confusion_matrix.png` is a heatmap confusion matrix of the model's performance.
 
-![Confusion Matrix](/readme/confusion_matrix.png)
+![Confusion Matrix](/README_IMAGES/confusion_matrix.png)
 
 ### validation.py
 
@@ -71,4 +71,4 @@ The program assumes that the test directory is named `Test` and is inside the gi
 
 The program saves the mosaic image to `mosaic.png` in the current directory. Since the dataset is unlabeled, the program does not evaluate the model's performance and must be done so manually. This works for any dataset of images that are 32x32 pixels in size and fall inside one of the 43 categories.
 
-![Mosaic](/readme/mosaic.png)
+![Mosaic](/README_IMAGES/mosaic.png)
