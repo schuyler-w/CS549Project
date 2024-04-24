@@ -4,9 +4,10 @@ import csv
 import random
 import sys
 
+import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
-import numpy as np
+
 
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
@@ -312,3 +313,30 @@ def plot_misclassified(x_test, y_true_classes, y_pred_classes, save_path):
 
     plt.subplots_adjust(left=0.05, right=0.95, top=0.9, bottom=0.1, wspace=0.4, hspace=0.4)
     plt.savefig(save_path)
+
+
+def plot_unlabeled(model, data_dir):
+    """
+    Plot a 5x5 mosaic of random 25 images from the test set with predictions and confidence.
+
+    Parameters:
+    model (tf.keras.Model): The trained model.
+    data_dir (str): The directory containing the test images.
+    """
+    # Load descriptions
+    descriptions = load_descriptions("signs.csv")
+    model = tf.keras.models.load_model(model)
+
+    # Prepare images
+    images = prepare_images(data_dir)
+    image_arrays = [image['array'] for image in images]
+
+    # Predict
+    predictions = model.predict(np.array(image_arrays))
+
+    # Add predictions and confidence to images
+    images = add_predictions_to_images(images, predictions)
+    images = add_text(images, descriptions)
+
+    # Generate mosaic
+    generate_mosaic(images, descriptions)
