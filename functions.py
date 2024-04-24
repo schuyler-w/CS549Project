@@ -201,6 +201,7 @@ def load_partial_data(data_dir, prop):
 
     return images, labels
 
+
 def get_model():
     """
     :return: compiled neural network model
@@ -228,3 +229,86 @@ def get_model():
                   metrics=["accuracy"])
 
     return model
+
+
+def plot_classification_mosaic(x_test, y_true_classes, y_pred_classes, save_path):
+    """
+    Plots a 5x5 mosaic of random 25 images from the test set showing ground truth vs predictions.
+
+    Parameters:
+    x_test (np.array): The array of test images.
+    y_true_classes (np.array): The array of true class indices for the test images.
+    y_pred_classes (np.array): The array of predicted class indices for the test images.
+    descriptions_file (str): File path to load descriptions of labels.
+    save_path (str): Path to save the plot image.
+    """
+    # Randomly select 25 indices
+    indices = np.random.choice(np.arange(len(x_test)), 25, replace=False)
+    sample_images = x_test[indices]
+    sample_pred_classes = y_pred_classes[indices]
+    sample_true_classes = y_true_classes[indices]
+
+    # Load descriptions
+    descriptions = load_descriptions("signs.csv")
+
+    # Plot mosaic of ground truth vs predictions
+    plt.figure(figsize=(10, 10))
+    plt.suptitle("Validation: Ground Truth vs Prediction", fontsize=16, color='black')
+    for i in range(25):
+        plt.subplot(5, 5, i + 1)
+        plt.grid(False)
+        plt.xticks([])
+        plt.yticks([])
+        prediction = descriptions[sample_pred_classes[i]]
+        actual = descriptions[sample_true_classes[i]]
+        col = 'g' if sample_pred_classes[i] == sample_true_classes[i] else 'r'
+        plt.xlabel(f'True: {actual}\nPred: {prediction}', color=col, fontsize=6)
+        plt.imshow(sample_images[i])
+
+    plt.subplots_adjust(left=0.05, right=0.95, top=0.9, bottom=0.1, wspace=0.4, hspace=0.4)
+    plt.savefig(save_path)
+
+
+def plot_misclassified(x_test, y_true_classes, y_pred_classes, save_path):
+    """
+    Plots 25 randomly selected misclassified images.
+
+    Parameters:
+    x_test (np.array): The array of test images.
+    y_true_classes (np.array): The array of true class indices for the test images.
+    y_pred_classes (np.array): The array of predicted class indices for the test images.
+    descriptions (dict): A dictionary mapping class indices to descriptions.
+    save_path (str): Path to save the plot image.
+    """
+    # Identify misclassified images
+    misclassified_indices = np.where(y_pred_classes != y_true_classes)[0]
+
+    # Ensure there are at least 25 misclassified images to sample from
+    if len(misclassified_indices) >= 25:
+        sample_indices = np.random.choice(misclassified_indices, 25, replace=False)
+    else:
+        sample_indices = misclassified_indices  # Use all if less than 25
+
+    # Get the misclassified images and labels for the sample
+    sample_images = x_test[sample_indices]
+    sample_pred_classes = y_pred_classes[sample_indices]
+    sample_true_classes = y_true_classes[sample_indices]
+
+    # Load descriptions
+    descriptions = load_descriptions("signs.csv")
+
+    # Plot misclassified images
+    plt.figure(figsize=(10, 10))
+    plt.suptitle("Misclassified Images: Ground Truth vs Prediction", fontsize=16, color='black')
+    for i in range(len(sample_indices)):
+        plt.subplot(5, 5, i + 1)
+        plt.grid(False)
+        plt.xticks([])
+        plt.yticks([])
+        prediction = descriptions[sample_pred_classes[i]]
+        actual = descriptions[sample_true_classes[i]]
+        plt.xlabel(f'True: {actual}\nPred: {prediction}', color='r', fontsize=6)
+        plt.imshow(sample_images[i])
+
+    plt.subplots_adjust(left=0.05, right=0.95, top=0.9, bottom=0.1, wspace=0.4, hspace=0.4)
+    plt.savefig(save_path)
