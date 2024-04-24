@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
 
-from functions import load_descriptions, load_data, get_model
+from functions import load_data, get_model, plot_classification_mosaic, plot_misclassified
 
 EPOCHS = 10
 NUM_CATEGORIES = 43
@@ -85,31 +85,12 @@ def main():
     print("Confusion matrix saved to confusion_matrix.png")
 
     # Display a 5x5 plot of a set of random 25 images in the test set
-    indices = np.random.choice(np.arange(len(x_test)), 25, replace=False)
-    sample_images = x_test[indices]
-    sample_pred_classes = y_pred_classes[indices]
-    sample_true_classes = y_true_classes[indices]
+    plot_classification_mosaic(x_test, y_true_classes, y_pred_classes, 'prediction_results.png')
+    print("Prediction results saved to prediction_results.png")
 
-    # map numeric labels -> descriptions of signs
-    descriptions = load_descriptions("signs.csv")
-
-    # plot mosaic of ground truth vs preds
-    plt.figure(figsize=(10, 10))
-    plt.suptitle("Validation: Ground Truth vs Prediction", fontsize=16, color='black')
-    for i in range(25):
-        plt.subplot(5, 5, i + 1)
-        plt.grid(False)
-        plt.xticks([])
-        plt.yticks([])
-        prediction = descriptions[sample_pred_classes[i]]
-        actual = descriptions[sample_true_classes[i]]
-        col = 'g' if sample_pred_classes[i] == sample_true_classes[i] else 'r'
-        plt.xlabel(f'True: {actual}\nPred: {prediction}', color=col, fontsize=6)
-        plt.imshow(sample_images[i])
-
-    # Save the figure
-    plt.subplots_adjust(left=0.05, right=0.95, top=0.9, bottom=0.1, wspace=0.4, hspace=0.4)
-    plt.savefig('prediction_results.png')  # Saves the plot as a PNG file
+    # plot mosaic of misclassified images
+    plot_misclassified(x_test, y_true_classes, y_pred_classes, 'misclassified_results.png')
+    print("Misclassified results saved to misclassified_results.png")
 
     # save model to file specified or default
     if len(sys.argv) == 3:
