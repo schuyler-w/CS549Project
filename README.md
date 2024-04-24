@@ -5,6 +5,8 @@ CS 549 - Machine Learning Final Project
 Schuyler Wang, Alexander Pham, Thu Vu
 
 ___
+## Introduction
+
 This project aims to create a convolutional neural network to identify which traffic sign appears in a picture or photograph. 
 
 The dataset used is the German Traffic Sign Recognition Benchmark (GTSRB) dataset, which contains 43 classes of traffic signs. The dataset is split into a training set and a test set, using `scikit-learn's` `train_test_split` function. By default the training set contains `70%` of the data, while the test set contains `30%` of the data. This can be modified in the source code.
@@ -23,6 +25,8 @@ ___
 3. Download the dataset from the link above and place in program directory
 
 There are three main files in the repository, each file has extra command line arguments that can be used to customize the program, although they are each designed with default values in mind so that they can be run without any arguments.
+
+## Repository Contents
 
 ### main.py
 This file contains the main code for the project. It reads the dataset, preprocesses the images, creates the model, trains the model, and evaluates the model.
