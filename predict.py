@@ -1,9 +1,5 @@
 import sys
-
-import numpy as np
-import tensorflow as tf
-
-from functions import load_descriptions, prepare_images, add_predictions_to_images, add_text, generate_mosaic, plot_unlabeled
+from functions import plot_unlabeled
 
 
 def main():
