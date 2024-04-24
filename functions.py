@@ -240,7 +240,6 @@ def plot_classification_mosaic(x_test, y_true_classes, y_pred_classes, save_path
     x_test (np.array): The array of test images.
     y_true_classes (np.array): The array of true class indices for the test images.
     y_pred_classes (np.array): The array of predicted class indices for the test images.
-    descriptions_file (str): File path to load descriptions of labels.
     save_path (str): Path to save the plot image.
     """
     # Randomly select 25 indices
@@ -277,8 +276,7 @@ def plot_misclassified(x_test, y_true_classes, y_pred_classes, save_path):
     Parameters:
     x_test (np.array): The array of test images.
     y_true_classes (np.array): The array of true class indices for the test images.
-    y_pred_classes (np.array): The array of predicted class indices for the test images.
-    descriptions (dict): A dictionary mapping class indices to descriptions.
+    y_pred_classes (np.array): The array of predicted class indices for the test images.\
     save_path (str): Path to save the plot image.
     """
     # Identify misclassified images
