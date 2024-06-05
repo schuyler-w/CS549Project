@@ -1,4 +1,4 @@
-# CS549 Project Traffic Identification
+# Traffic Identification AI Model
 
 ___
 ## Introduction
